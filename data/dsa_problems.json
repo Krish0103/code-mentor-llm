@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "tags": ["array", "hashmap", "two-pointers"],
+    "problem": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+    "approach": "Use a HashMap to store each number and its index. For each number, check if (target - number) exists in the map. If yes, return both indices. If no, add current number to map.",
+    "complexity": "Time: O(n), Space: O(n)",
+    "company_tags": ["Amazon", "Google", "Facebook", "Microsoft", "Apple"],
+    "hints": ["Think about what complement you need for each number", "How can you check if a complement exists in O(1)?"]
+  },
+  {
+    "id": 2,
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "tags": ["stack", "string"],
+    "problem": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: Open brackets must be closed by the same type of brackets. Open brackets must be closed in the correct order.",
+    "approach": "Use a stack. For each opening bracket, push it. For each closing bracket, check if stack top has matching opening bracket. If yes, pop. If no or stack empty, return false. At end, stack should be empty.",
+    "complexity": "Time: O(n), Space: O(n)",
+    "company_tags": ["Amazon", "Google", "Facebook", "Bloomberg"],
+    "hints": ["What data structure follows LIFO?", "Think about matching pairs"]
+  },
+  {
+    "id": 3,
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "Easy",
+    "tags": ["linked-list", "recursion"],
+    "problem": "Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.",
+    "approach": "Use two pointers, one for each list. Compare values and attach smaller one to result. Move pointer forward. Handle remaining elements when one list is exhausted.",
+    "complexity": "Time: O(n+m), Space: O(1) iterative / O(n+m) recursive",
+    "company_tags": ["Amazon", "Microsoft", "Apple", "Adobe"],
+    "hints": ["Visualize merging process", "What happens when one list ends?"]
+  },
+  {
+    "id": 4,
+    "title": "Maximum Subarray",
+    "difficulty": "Medium",
+    "tags": ["array", "dynamic-programming", "divide-and-conquer"],
+    "problem": "Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
+    "approach": "Kadane's Algorithm: Track current sum and max sum. For each element, current = max(element, current + element). Update max if current > max. Reset current if it goes negative.",
+    "complexity": "Time: O(n), Space: O(1)",
+    "company_tags": ["Amazon", "Microsoft", "LinkedIn", "Apple"],
+    "hints": ["Consider when to start a new subarray", "Current sum going negative is a signal"]
+  },
+  {
+    "id": 5,
+    "title": "Climbing Stairs",
+    "difficulty": "Easy",
+    "tags": ["dynamic-programming", "fibonacci", "memoization"],
+    "problem": "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+    "approach": "DP approach: ways(n) = ways(n-1) + ways(n-2). This is essentially Fibonacci. Use two variables to track previous two values to optimize space.",
+    "complexity": "Time: O(n), Space: O(1)",
+    "company_tags": ["Amazon", "Adobe", "Apple"],
+    "hints": ["How many ways to reach step n from n-1 and n-2?", "This looks like Fibonacci"]
+  },
+  {
+    "id": 6,
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "Easy",
+    "tags": ["array", "dynamic-programming", "greedy"],
+    "problem": "You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction.",
+    "approach": "Track minimum price seen so far and maximum profit. For each price, calculate profit if sold today (price - minPrice). Update maxProfit and minPrice accordingly.",
+    "complexity": "Time: O(n), Space: O(1)",
+    "company_tags": ["Amazon", "Facebook", "Microsoft", "Goldman Sachs"],
+    "hints": ["You need to buy before selling", "Track the minimum price as you go"]
+  },
+  {
+    "id": 7,
+    "title": "Binary Tree Level Order Traversal",
+    "difficulty": "Medium",
+    "tags": ["tree", "bfs", "queue"],
+    "problem": "Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).",
+    "approach": "Use BFS with a queue. For each level, process all nodes currently in queue, add their children, and collect values. Continue until queue is empty.",
+    "complexity": "Time: O(n), Space: O(n)",
+    "company_tags": ["Amazon", "Microsoft", "Facebook", "Bloomberg"],
+    "hints": ["BFS naturally processes level by level", "Track level size before processing"]
+  },
+  {
+    "id": 8,
+    "title": "Validate Binary Search Tree",
+    "difficulty": "Medium",
+    "tags": ["tree", "dfs", "bst", "recursion"],
+    "problem": "Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST is defined as: The left subtree of a node contains only nodes with keys less than the node's key. The right subtree of a node contains only nodes with keys greater than the node's key. Both left and right subtrees must also be binary search trees.",
+    "approach": "Use recursion with min/max bounds. For each node, check if value is within valid range. Going left, update max bound. Going right, update min bound.",
+    "complexity": "Time: O(n), Space: O(h) where h is height",
+    "company_tags": ["Amazon", "Facebook", "Microsoft", "Bloomberg"],
+    "hints": ["Each node has valid range constraints", "Inorder traversal of BST is sorted"]
+  },
+  {
+    "id": 9,
+    "title": "Coin Change",
+    "difficulty": "Medium",
+    "tags": ["dynamic-programming", "bfs", "memoization"],
+    "problem": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.",
+    "approach": "DP: Create array dp[amount+1] initialized to infinity. dp[0] = 0. For each amount i, try each coin. dp[i] = min(dp[i], dp[i-coin] + 1). Return dp[amount] or -1.",
+    "complexity": "Time: O(amount * coins), Space: O(amount)",
+    "company_tags": ["Amazon", "Google", "Microsoft", "Apple"],
+    "hints": ["Build solution from smaller amounts", "For each amount, try all coins"]
+  },
+  {
+    "id": 10,
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "Medium",
+    "tags": ["dynamic-programming", "binary-search"],
+    "problem": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
+    "approach": "DP: dp[i] = longest increasing subsequence ending at i. For each j < i, if nums[j] < nums[i], dp[i] = max(dp[i], dp[j] + 1). Optimized: Use binary search with patience sorting.",
+    "complexity": "Time: O(n²) DP / O(n log n) optimized, Space: O(n)",
+    "company_tags": ["Amazon", "Microsoft", "Google", "Facebook"],
+    "hints": ["Consider all previous elements", "Binary search can optimize"]
+  },
+  {
+    "id": 11,
+    "title": "3Sum",
+    "difficulty": "Medium",
+    "tags": ["array", "two-pointers", "sorting"],
+    "problem": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.",
+    "approach": "Sort array. Fix one element, use two pointers for remaining two. Skip duplicates to avoid duplicate triplets. Move pointers based on sum comparison with target.",
+    "complexity": "Time: O(n²), Space: O(1) excluding output",
+    "company_tags": ["Amazon", "Facebook", "Google", "Microsoft", "Apple"],
+    "hints": ["Sorting helps with duplicates", "Two Sum with a fixed first element"]
+  },
+  {
+    "id": 12,
+    "title": "Merge Intervals",
+    "difficulty": "Medium",
+    "tags": ["array", "sorting", "intervals"],
+    "problem": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+    "approach": "Sort by start time. Iterate through intervals. If current overlaps with last merged, extend end time. Otherwise, add current interval to result.",
+    "complexity": "Time: O(n log n), Space: O(n)",
+    "company_tags": ["Amazon", "Google", "Facebook", "Microsoft", "LinkedIn"],
+    "hints": ["Sorting simplifies overlap detection", "Compare current start with previous end"]
+  },
+  {
+    "id": 13,
+    "title": "Product of Array Except Self",
+    "difficulty": "Medium",
+    "tags": ["array", "prefix-sum"],
+    "problem": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i]. You must write an algorithm that runs in O(n) time and without using the division operation.",
+    "approach": "Two passes: First pass computes prefix products (product of all elements to the left). Second pass computes suffix products (product of all elements to the right) and multiplies with prefix.",
+    "complexity": "Time: O(n), Space: O(1) excluding output",
+    "company_tags": ["Amazon", "Facebook", "Apple", "Microsoft"],
+    "hints": ["Product except self = left product * right product", "Can you compute prefix and suffix products?"]
+  },
+  {
+    "id": 14,
+    "title": "Word Search",
+    "difficulty": "Medium",
+    "tags": ["backtracking", "dfs", "matrix"],
+    "problem": "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.",
+    "approach": "DFS with backtracking. Start from each cell matching first character. Explore all 4 directions. Mark visited cells. Backtrack if path doesn't work.",
+    "complexity": "Time: O(m * n * 4^L) where L is word length, Space: O(L)",
+    "company_tags": ["Amazon", "Microsoft", "Facebook", "Bloomberg"],
+    "hints": ["Try starting from each cell", "Track visited cells during path"]
+  },
+  {
+    "id": 15,
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "tags": ["bfs", "dfs", "matrix", "union-find"],
+    "problem": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.",
+    "approach": "For each unvisited land cell, increment count and flood fill (DFS/BFS) to mark all connected land as visited. Continue until all cells processed.",
+    "complexity": "Time: O(m * n), Space: O(m * n) worst case",
+    "company_tags": ["Amazon", "Microsoft", "Google", "Facebook", "Bloomberg"],
+    "hints": ["Each new land cell could be a new island", "Flood fill marks entire island"]
+  },
+  {
+    "id": 16,
+    "title": "LRU Cache",
+    "difficulty": "Medium",
+    "tags": ["design", "hashmap", "linked-list"],
+    "problem": "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache. Implement the LRUCache class with get and put operations in O(1) time.",
+    "approach": "Use HashMap for O(1) lookup and Doubly Linked List for O(1) removal/insertion. HashMap maps key to node. Most recent at head, least recent at tail.",
+    "complexity": "Time: O(1) for both operations, Space: O(capacity)",
+    "company_tags": ["Amazon", "Microsoft", "Facebook", "Google", "Apple"],
+    "hints": ["Need O(1) lookup AND O(1) removal", "Doubly linked list enables O(1) removal"]
+  },
+  {
+    "id": 17,
+    "title": "Trapping Rain Water",
+    "difficulty": "Hard",
+    "tags": ["array", "two-pointers", "dynamic-programming", "stack"],
+    "problem": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "approach": "Two pointers approach: Track left_max and right_max. Water at position = min(left_max, right_max) - height. Move pointer with smaller max inward.",
+    "complexity": "Time: O(n), Space: O(1)",
+    "company_tags": ["Amazon", "Google", "Facebook", "Microsoft", "Goldman Sachs"],
+    "hints": ["Water level at any point depends on boundaries", "Which boundary matters at each point?"]
+  },
+  {
+    "id": 18,
+    "title": "Median of Two Sorted Arrays",
+    "difficulty": "Hard",
+    "tags": ["binary-search", "array", "divide-and-conquer"],
+    "problem": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).",
+    "approach": "Binary search on smaller array. Find partition where left elements ≤ right elements. Adjust partition using binary search until valid partition found.",
+    "complexity": "Time: O(log(min(m,n))), Space: O(1)",
+    "company_tags": ["Amazon", "Google", "Microsoft", "Apple", "Goldman Sachs"],
+    "hints": ["Binary search on partition position", "Ensure left half elements ≤ right half"]
+  },
+  {
+    "id": 19,
+    "title": "Serialize and Deserialize Binary Tree",
+    "difficulty": "Hard",
+    "tags": ["tree", "dfs", "bfs", "design"],
+    "problem": "Design an algorithm to serialize and deserialize a binary tree. Serialization is converting a tree to a string. Deserialization is reconstructing the tree from the string.",
+    "approach": "Use preorder traversal. Serialize: Output node value or 'null' for null nodes. Deserialize: Parse values, recursively build left then right subtrees.",
+    "complexity": "Time: O(n), Space: O(n)",
+    "company_tags": ["Amazon", "Facebook", "Microsoft", "LinkedIn"],
+    "hints": ["Preorder gives root first", "Use marker for null nodes"]
+  },
+  {
+    "id": 20,
+    "title": "Minimum Window Substring",
+    "difficulty": "Hard",
+    "tags": ["string", "sliding-window", "hashmap"],
+    "problem": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return empty string.",
+    "approach": "Sliding window with two pointers. Expand right to include characters. When all t chars included, shrink left to minimize window. Track minimum window found.",
+    "complexity": "Time: O(m + n), Space: O(m + n)",
+    "company_tags": ["Amazon", "Facebook", "Google", "Microsoft", "LinkedIn"],
+    "hints": ["Expand window until valid", "Contract window while maintaining validity"]
+  }
+]

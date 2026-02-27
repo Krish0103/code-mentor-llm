@@ -1,0 +1,91 @@
+# ============================================
+# CodeMentor LLM - Docker Compose
+# ============================================
+# Usage: docker-compose up -d
+# ============================================
+
+version: '3.8'
+
+services:
+  # ============================================
+  # Ollama - Local LLM Server
+  # ============================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: codementor-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Comment out GPU section if not using NVIDIA GPU:
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
+
+  # ============================================
+  # CodeMentor API Server
+  # ============================================
+  codementor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: codementor-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=llama3:8b-instruct-q4_K_M
+      - EMBEDDING_MODEL=all-MiniLM-L6-v2
+      - EMBEDDING_DIMENSION=384
+      - RAG_TOP_K=5
+      - RAG_SIMILARITY_THRESHOLD=0.7
+      - LOG_LEVEL=info
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ============================================
+  # Ollama Model Loader (one-time setup)
+  # ============================================
+  model-loader:
+    image: curlimages/curl:latest
+    container_name: codementor-model-loader
+    depends_on:
+      - ollama
+    entrypoint: >
+      sh -c "
+        echo 'Waiting for Ollama to start...' &&
+        sleep 10 &&
+        echo 'Pulling llama3 model...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\": \"llama3:8b-instruct-q4_K_M\"}' &&
+        echo 'Model pull initiated!'
+      "
+    restart: "no"
+
+volumes:
+  ollama_data:
+    driver: local
+
+networks:
+  default:
+    name: codementor-network

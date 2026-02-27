@@ -1,0 +1,7 @@
+{
+  "path": "F:\\Coding\\LLm\\code-mentor-llm\\data\\faiss.index",
+  "dimension": 384,
+  "count": 20,
+  "type": "IndexFlatIP",
+  "createdAt": "2026-02-26T04:34:02.416Z"
+}
